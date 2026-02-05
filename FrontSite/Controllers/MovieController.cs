@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Net;
 
 namespace FrontSite.Controllers
 {
+    [Authorize(Roles = "User,Manager")]
     public class MoviesController : Controller
     {
         private RestClient _client;
         private string apiUrl = "https://localhost:7163/api/movies";
-
         public MoviesController()
         {
             _client = new RestClient(apiUrl);
@@ -20,7 +21,7 @@ namespace FrontSite.Controllers
             return string.IsNullOrWhiteSpace(token);
         }
         public IActionResult Index()
-        {
+        {            
             string token = HttpContext.Session.GetString("token") ?? "";
             if (string.IsNullOrWhiteSpace(token)) return RedirectToAction("Index", "Login");
             RestRequest request = new RestRequest("/get");

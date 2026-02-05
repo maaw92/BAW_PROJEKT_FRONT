@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+
 namespace FrontSite
 {
     public class Program
@@ -15,6 +18,8 @@ namespace FrontSite
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;                
             });
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x=>x.LoginPath = "/Login/Index");
+            builder.Services.AddAuthorization();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +34,7 @@ namespace FrontSite
             app.UseRouting();
             app.UseSession();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
