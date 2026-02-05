@@ -1,0 +1,14 @@
+﻿@model List<FrontSite.Controllers.MovieEventDto>
+
+<h2>Filmy</h2>
+<ul>
+    @foreach (var movie in Model)
+    {
+        <li>
+            @movie.Name (@movie.Date.ToShortDateString())
+            - @Html.ActionLink("Pokaż miejsca", "Seats", "Movies", new { id = movie.Id }, null)
+        </li>
+    }
+    
+
+</ul>

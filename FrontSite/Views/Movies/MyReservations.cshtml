@@ -1,0 +1,13 @@
+﻿@model List<FrontSite.Controllers.ExistingEventDto>
+
+<h2>Moje Rezerwacje</h2>
+<ul>
+    @foreach (var movie in Model)
+    {
+        <li>
+            @movie.Name (@movie.Date.ToShortDateString()), Miejsce: @movie.SeatNo           
+        </li>
+    }
+
+
+</ul>

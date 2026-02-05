@@ -1,0 +1,35 @@
+﻿@model List<FrontSite.Controllers.SeatDto>
+@{
+    var eventId = ViewBag.EventId;
+}
+
+<h2>Wolne miejsca</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div style="color:red">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div style="color:green">@TempData["Success"]</div>
+}
+
+<table>
+    <tr>
+        <th>Miejsce</th>
+        <th>Akcja</th>
+    </tr>
+    @foreach (var seat in Model)
+    {
+        <tr>
+            <td>@seat.SeatNumber</td>
+            <td>
+                <form asp-action="Reserve" method="post">
+                    <input type="hidden" name="eventId" value="@eventId" />
+                    <input type="hidden" name="seatId" value="@seat.Id" />
+                    <button type="submit">Rezerwuj</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
